@@ -73,7 +73,9 @@ function fish_right_prompt -d 'bobthefish is all about the right prompt'
 
     set_color $fish_color_autosuggestion
 
+    [ "$theme_newline_cursor" = 'yes' ]; and echo -e "\e[A"
     __bobthefish_cmd_duration
     __bobthefish_timestamp
+    [ "$theme_newline_cursor" = 'yes' ]; and echo -e "\e[B"
     set_color normal
 end
