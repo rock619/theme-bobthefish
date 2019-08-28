@@ -24,6 +24,7 @@
 #     set -g theme_display_git_dirty_verbose yes
 #     set -g theme_display_git_stashed_verbose yes
 #     set -g theme_display_git_master_branch yes
+#     set -g theme_display_git_full_branch no
 #     set -g theme_git_worktree_support yes
 #     set -g theme_display_vagrant yes
 #     set -g theme_display_docker_machine no
@@ -71,10 +72,11 @@ function __bobthefish_git_branch -S -d 'Get the current git branch (or commitish
         and echo $branch_glyph
         and return
 
+        [ "$theme_display_git_full_branch" != 'yes' ]
         # truncate the middle of the branch name, but only if it's 25+ characters
-        set -l truncname (string replace -r '^(.{28}).{3,}(.{5})$' "\$1…\$2" $ref)
+        and set -l ref (string replace -r '^(.{28}).{3,}(.{5})$' "\$1…\$2" $ref)
 
-        string replace -r '^refs/heads/' "$branch_glyph " $truncname
+        string replace -r '^refs/heads/' "$branch_glyph " $ref
         and return
     end
 
